@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "194759358957",
+    "firebase_url": "https://bakery-41c4d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bakery-41c4d",
+    "storage_bucket": "bakery-41c4d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194759358957:android:0cab5264af9dad31884fe4",
+        "android_client_info": {
+          "package_name": "com.example.bakery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDEm2r76e4XKapvvcsXLQ3qGoAKlAFCeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
