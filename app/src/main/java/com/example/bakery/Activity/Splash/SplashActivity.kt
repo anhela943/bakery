@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,17 +30,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakery.Activity.BaseActivity
+import com.example.bakery.Activity.Auth.LoginActivity
+import com.example.bakery.Activity.Auth.RegisterActivity
 import com.example.bakery.Activity.Dashboard.MainActivity
 import com.example.bakery.R
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
+
         setContent {
             SplashScreen(
-                onClick = {
-                    startActivity(Intent(this, MainActivity::class.java))
+                onRegisterClick = {
+                    startActivity(Intent(this, RegisterActivity::class.java))
+                },
+                onLoginClick = {
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
             )
         }
@@ -48,7 +62,10 @@ class SplashActivity : BaseActivity() {
 
 @Composable
 @Preview
-fun SplashScreen(onClick:() -> Unit={}){
+fun SplashScreen(
+    onRegisterClick: () -> Unit = {},
+    onLoginClick: () -> Unit = {}
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,7 +100,7 @@ fun SplashScreen(onClick:() -> Unit={}){
             lineHeight = 30.sp,
             modifier = Modifier.padding(top = 16.dp)
         )
-        Button(onClick = {onClick()},
+        Button(onClick = { onRegisterClick() },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(R.color.green)
@@ -104,7 +121,9 @@ fun SplashScreen(onClick:() -> Unit={}){
             color = colorResource(R.color.darkBrown),
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .clickable { onLoginClick() }
         )
     }
 

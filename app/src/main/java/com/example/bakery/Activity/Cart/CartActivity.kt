@@ -25,6 +25,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.bakery.Activity.BaseActivity
 import com.example.bakery.Activity.Dashboard.BottomMenu
 import com.example.bakery.Activity.Dashboard.MainActivity
+import com.example.bakery.Activity.Profile.ProfileActivity
 import com.example.bakery.Activity.Favorites.FavoritesActivity
 import com.example.bakery.Helper.ManagmentCart
 import com.example.bakery.R
@@ -42,6 +43,9 @@ class CartActivity : BaseActivity() {
                 },
                 onExploreClick = {
                     startActivity(Intent(this, MainActivity::class.java))
+                },
+                onProfileClick = {
+                    startActivity(Intent(this, ProfileActivity::class.java))
                 }
             )
         }
@@ -53,7 +57,8 @@ fun CartScreen(
     managmentCart: ManagmentCart = ManagmentCart(LocalContext.current),
     onBackClick: () -> Unit,
     onFavoriteClick: (() -> Unit)? = null,
-    onExploreClick: (() -> Unit)? = null
+    onExploreClick: (() -> Unit)? = null,
+    onProfileClick: (() -> Unit)? = null
 ){
     var cartItems = remember {mutableStateOf(managmentCart.getListCart())}
     val tax = remember { mutableStateOf(0.0) }
@@ -128,7 +133,8 @@ fun CartScreen(
                 },
             onExploreClick = onExploreClick,
             onItemClick = null,
-            onFavoriteClick = onFavoriteClick
+            onFavoriteClick = onFavoriteClick,
+            onProfileClick = onProfileClick
         )
     }
 }

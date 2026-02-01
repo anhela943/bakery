@@ -37,6 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.bakery.Activity.BaseActivity
 import com.example.bakery.Activity.Cart.CartActivity
 import com.example.bakery.Activity.Favorites.FavoritesActivity
+import com.example.bakery.Activity.Profile.ProfileActivity
 import com.example.bakery.Domain.CategoryModel
 import com.example.bakery.Domain.ItemsModel
 import com.example.bakery.Domain.SliderModel
@@ -53,6 +54,9 @@ class MainActivity : BaseActivity() {
                 },
                 onFavoriteClick = {
                     startActivity(Intent(this, FavoritesActivity::class.java))
+                },
+                onProfileClick = {
+                    startActivity(Intent(this, ProfileActivity::class.java))
                 }
             )
         }
@@ -62,7 +66,8 @@ class MainActivity : BaseActivity() {
 @Composable
 fun DashboardScreen(
     onCartClick:()-> Unit,
-    onFavoriteClick:()-> Unit
+    onFavoriteClick:()-> Unit,
+    onProfileClick:()-> Unit
 ){
     val viewModel = MainViewModel()
 
@@ -226,7 +231,8 @@ fun DashboardScreen(
                     bottom.linkTo(parent.bottom)
                 },
             onItemClick = onCartClick,
-            onFavoriteClick = onFavoriteClick
+            onFavoriteClick = onFavoriteClick,
+            onProfileClick = onProfileClick
         )
     }
 }

@@ -28,7 +28,8 @@ fun BottomMenu(
     modifier: Modifier,
     onExploreClick: (() -> Unit)? = null,
     onItemClick: (() -> Unit)?,
-    onFavoriteClick: (() -> Unit)?
+    onFavoriteClick: (() -> Unit)?,
+    onProfileClick: (() -> Unit)? = null
 ){
     Row(
         modifier = modifier
@@ -55,7 +56,11 @@ fun BottomMenu(
             onItemClick = onFavoriteClick
         )
         BottomMenuItem(icon = painterResource(R.drawable.btn_4), text = "Orders")
-        BottomMenuItem(icon = painterResource(R.drawable.btn_5), text = "Profile")
+        BottomMenuItem(
+            icon = painterResource(R.drawable.btn_5),
+            text = "Profile",
+            onItemClick = onProfileClick
+        )
     }
 }
 

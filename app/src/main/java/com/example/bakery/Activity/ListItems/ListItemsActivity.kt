@@ -3,13 +3,13 @@ package com.example.bakery.Activity.ListItems
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -75,7 +75,7 @@ private fun ListItemsScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         ConstraintLayout(
-            modifier = Modifier.padding(top=16.dp, start =16.dp, end =16.dp)
+            modifier = Modifier.padding(top = 36.dp, start = 16.dp, end = 16.dp)
         ) {
             val(backBtn, cartTxt) = createRefs()
 
@@ -89,19 +89,19 @@ private fun ListItemsScreen(
                 text = title
             )
 
-            Image(
-                painter = painterResource(R.drawable.back),
-                contentDescription = null,
-                modifier = Modifier
-                    .clickable{
-                        onBackClick()
-                    }
-                    .constrainAs(backBtn){
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
-                    }
-            )
+            IconButton(
+                onClick = onBackClick,
+                modifier = Modifier.constrainAs(backBtn) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                }
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.back),
+                    contentDescription = null
+                )
+            }
         }
 
         if(isLoading){
@@ -116,7 +116,6 @@ private fun ListItemsScreen(
         }
     }
 }
-
 
 
 

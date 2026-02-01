@@ -30,6 +30,7 @@ import com.example.bakery.Activity.Cart.CartActivity
 import com.example.bakery.Activity.Dashboard.BottomMenu
 import com.example.bakery.Activity.Dashboard.MainActivity
 import com.example.bakery.Activity.Dashboard.ListItemsFullSizeVertical
+import com.example.bakery.Activity.Profile.ProfileActivity
 import com.example.bakery.Domain.ItemsModel
 import com.example.bakery.R
 import com.example.bakery.Repository.FavoritesRepository
@@ -41,7 +42,8 @@ class FavoritesActivity : BaseActivity() {
             FavoritesScreen(
                 onBackClick = { finish() },
                 onCartClick = { startActivity(Intent(this, CartActivity::class.java)) },
-                onExploreClick = { startActivity(Intent(this, MainActivity::class.java)) }
+                onExploreClick = { startActivity(Intent(this, MainActivity::class.java)) },
+                onProfileClick = { startActivity(Intent(this, ProfileActivity::class.java)) }
             )
         }
     }
@@ -52,6 +54,7 @@ private fun FavoritesScreen(
     onBackClick: () -> Unit,
     onCartClick: () -> Unit,
     onExploreClick: () -> Unit,
+    onProfileClick: () -> Unit,
     favorites: List<ItemsModel> = FavoritesRepository.favorites
 ) {
     ConstraintLayout(
@@ -130,7 +133,8 @@ private fun FavoritesScreen(
                 },
             onExploreClick = onExploreClick,
             onItemClick = onCartClick,
-            onFavoriteClick = null
+            onFavoriteClick = null,
+            onProfileClick = onProfileClick
         )
     }
 }
@@ -155,6 +159,7 @@ private fun FavoritesScreenPreview() {
         onBackClick = {},
         onCartClick = {},
         onExploreClick = {},
+        onProfileClick = {},
         favorites = previewItems
     )
 }

@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bakery">
         <activity
+            android:name=".Activity.Auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Cart.CartActivity"
             android:exported="false" />
         <activity
