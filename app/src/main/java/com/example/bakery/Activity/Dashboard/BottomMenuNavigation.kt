@@ -24,7 +24,12 @@ import androidx.compose.ui.unit.sp
 import com.example.bakery.R
 
 @Composable
-fun BottomMenu(modifier: Modifier, onItemClick: (() -> Unit)?){
+fun BottomMenu(
+    modifier: Modifier,
+    onExploreClick: (() -> Unit)? = null,
+    onItemClick: (() -> Unit)?,
+    onFavoriteClick: (() -> Unit)?
+){
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -34,10 +39,21 @@ fun BottomMenu(modifier: Modifier, onItemClick: (() -> Unit)?){
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        BottomMenuItem(icon = painterResource(R.drawable.btn_1), text = "Explorer")
-        BottomMenuItem(icon = painterResource(R.drawable.btn_2), text = "Cart",
-            onItemClick = onItemClick)
-        BottomMenuItem(icon = painterResource(R.drawable.btn_3), text = "Favorite")
+        BottomMenuItem(
+            icon = painterResource(R.drawable.btn_1),
+            text = "Explorer",
+            onItemClick = onExploreClick
+        )
+        BottomMenuItem(
+            icon = painterResource(R.drawable.btn_2),
+            text = "Cart",
+            onItemClick = onItemClick
+        )
+        BottomMenuItem(
+            icon = painterResource(R.drawable.btn_3),
+            text = "Favorite",
+            onItemClick = onFavoriteClick
+        )
         BottomMenuItem(icon = painterResource(R.drawable.btn_4), text = "Orders")
         BottomMenuItem(icon = painterResource(R.drawable.btn_5), text = "Profile")
     }

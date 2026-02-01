@@ -3,6 +3,7 @@ package com.example.bakery.Activity.Detail
 import android.content.Intent
 import android.media.Image
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,7 @@ import com.example.bakery.Activity.BaseActivity
 import com.example.bakery.Activity.Cart.CartActivity
 import com.example.bakery.Domain.ItemsModel
 import com.example.bakery.Helper.ManagmentCart
+import com.example.bakery.Repository.FavoritesRepository
 import com.example.bakery.R
 
 class DetailActivity : BaseActivity() {
@@ -62,6 +64,15 @@ class DetailActivity : BaseActivity() {
                     item.numberInCart = 1
                     managmentCart.insertItems(item)
                 },
+                onAddToFavoriteClick = {
+                    val isFavorite = FavoritesRepository.toggle(item)
+                    val message = if (isFavorite) {
+                        "Added to favorites"
+                    } else {
+                        "Removed from favorites"
+                    }
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                },
                 onCartClick = {
                     startActivity(Intent(this, CartActivity::class.java))
                 }
@@ -75,8 +86,11 @@ private fun DetailScreen(
     item: ItemsModel,
     onBackClick:() -> Unit,
     onAddToCartClick:() -> Unit,
+    onAddToFavoriteClick:() -> Unit,
     onCartClick:() -> Unit
 ){
+    val favorites = FavoritesRepository.favorites
+    val isFavorite = favorites.any { it.title == item.title && it.price == item.price }
     var selectedImageUrl by remember { mutableStateOf(item.picUrl.first()) }
     var selectedModelIndex by remember { mutableStateOf(-1) }
 
@@ -86,7 +100,13 @@ private fun DetailScreen(
             .background(Color.White)
             .verticalScroll(rememberScrollState())
     ) {
-        HeaderSection(selectedImageUrl, item.picUrl, onBackClick) {
+        HeaderSection(
+            selectedImageUrl,
+            item.picUrl,
+            onBackClick,
+            onAddToFavoriteClick,
+            isFavorite
+        ) {
             selectedImageUrl = it
         }
 
@@ -114,6 +134,8 @@ private fun DetailScreen(
 private fun HeaderSection(selctedImageUrl:String,
                           imageUrls: List<String>,
                           onBackClick:()-> Unit,
+                          onAddToFavoriteClick:()-> Unit,
+                          isFavorite: Boolean,
                           onImageSelected:(String)-> Unit
 ){
     ConstraintLayout(
@@ -148,7 +170,7 @@ private fun HeaderSection(selctedImageUrl:String,
         FavoriteButton(Modifier.constrainAs(fav){
             top.linkTo(parent.top)
             end.linkTo(parent.end)
-        })
+        }, onAddToFavoriteClick, isFavorite)
 
         LazyRow(modifier = Modifier
             .padding(vertical = 16.dp)
@@ -183,17 +205,21 @@ private fun BackButton(onClick:() -> Unit, modifier: Modifier= Modifier){
 }
 
 @Composable
-private fun FavoriteButton(modifier: Modifier= Modifier){
+private fun FavoriteButton(
+    modifier: Modifier= Modifier,
+    onClick: () -> Unit,
+    isFavorite: Boolean
+){
     Image(
         painter = painterResource(R.drawable.fav_icon),
         contentDescription = null,
+        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+            if (isFavorite) colorResource(R.color.green) else Color.White
+        ),
         modifier = modifier
             .padding(start = 16.dp, top = 48.dp, end = 16.dp)
+            .clickable { onClick() }
     )
 }
-
-
-
-
 
 

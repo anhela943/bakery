@@ -1,10 +1,7 @@
 package com.example.bakery.Activity.Cart
 
 import android.os.Bundle
-import android.text.Layout
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,16 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.bakery.Activity.BaseActivity
+import com.example.bakery.Activity.Dashboard.BottomMenu
+import com.example.bakery.Activity.Dashboard.MainActivity
+import com.example.bakery.Activity.Favorites.FavoritesActivity
 import com.example.bakery.Helper.ManagmentCart
 import com.example.bakery.R
+import android.content.Intent
 
 class CartActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +36,13 @@ class CartActivity : BaseActivity() {
 
         setContent {
             CartScreen(ManagmentCart(this),
-                onBackClick = {finish()}
+                onBackClick = { finish() },
+                onFavoriteClick = {
+                    startActivity(Intent(this, FavoritesActivity::class.java))
+                },
+                onExploreClick = {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
             )
         }
     }
@@ -47,58 +51,85 @@ class CartActivity : BaseActivity() {
 @Composable
 fun CartScreen(
     managmentCart: ManagmentCart = ManagmentCart(LocalContext.current),
-    onBackClick:()->Unit
+    onBackClick: () -> Unit,
+    onFavoriteClick: (() -> Unit)? = null,
+    onExploreClick: (() -> Unit)? = null
 ){
     var cartItems = remember {mutableStateOf(managmentCart.getListCart())}
     val tax = remember { mutableStateOf(0.0) }
 
     calculatorCart(managmentCart, tax)
 
-    Column(
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        ConstraintLayout(
-            modifier = Modifier.padding(top = 36.dp)
+        val (content, bottomMenu) = createRefs()
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .constrainAs(content) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .padding(bottom = 96.dp)
         ) {
-            val(backBtn, cartTxt) = createRefs()
+            ConstraintLayout(
+                modifier = Modifier.padding(top = 36.dp)
+            ) {
+                val(backBtn, cartTxt) = createRefs()
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .constrainAs(cartTxt){centerTo(parent)},
-                text = "Your Cart",
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp
-            )
-            Image(
-                painter = painterResource(R.drawable.back),
-                contentDescription = null,
-                modifier = Modifier
-                    .constrainAs(backBtn){
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
-                    }
-                    .clickable{ onBackClick()}
-            )
-        }
-
-        if(cartItems.value.isEmpty()){
-            Text(text = "Cart Is Empty", modifier = Modifier.align(Alignment.CenterHorizontally))
-        } else{
-            CartList(cartItems = cartItems.value, managmentCart) {
-                cartItems.value = managmentCart.getListCart()
-                calculatorCart(managmentCart, tax)
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .constrainAs(cartTxt){centerTo(parent)},
+                    text = "Your Cart",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 25.sp
+                )
+                Image(
+                    painter = painterResource(R.drawable.back),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .constrainAs(backBtn){
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                        }
+                        .clickable{ onBackClick()}
+                )
             }
-            CartSummary(
-                itemTotal = managmentCart.getTotalFee(),
-                tax = tax.value,
-                delivery = 10.0
-            )
+
+            if(cartItems.value.isEmpty()){
+                Text(text = "Cart Is Empty", modifier = Modifier.align(Alignment.CenterHorizontally))
+            } else{
+                CartList(cartItems = cartItems.value, managmentCart) {
+                    cartItems.value = managmentCart.getListCart()
+                    calculatorCart(managmentCart, tax)
+                }
+                CartSummary(
+                    itemTotal = managmentCart.getTotalFee(),
+                    tax = tax.value,
+                    delivery = 10.0
+                )
+            }
         }
+
+        BottomMenu(
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(bottomMenu) {
+                    bottom.linkTo(parent.bottom)
+                },
+            onExploreClick = onExploreClick,
+            onItemClick = null,
+            onFavoriteClick = onFavoriteClick
+        )
     }
 }
 

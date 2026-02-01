@@ -15,6 +15,9 @@
             android:name=".Activity.Cart.CartActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.Favorites.FavoritesActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ListItems.ListItemsActivity"
             android:exported="false" />
         <activity
