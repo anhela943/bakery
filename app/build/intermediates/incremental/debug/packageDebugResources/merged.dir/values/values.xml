@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="brown">#cc9c68</color>
+    <color name="darkBrown">#433622</color>
+    <color name="green">#00532d</color>
+    <color name="grey">#919191</color>
+    <color name="lightGrey">#efefef</color>
+    <color name="midBrown">#864912</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Bakery</string>
+    <string name="firebase_database_url" translatable="false">https://bakery-41c4d-default-rtdb.europe-west1.firebasedatabase.app</string>
+    <string name="gcm_defaultSenderId" translatable="false">194759358957</string>
+    <string name="google_api_key" translatable="false">AIzaSyDDEm2r76e4XKapvvcsXLQ3qGoAKlAFCeQ</string>
+    <string name="google_app_id" translatable="false">1:194759358957:android:0cab5264af9dad31884fe4</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDDEm2r76e4XKapvvcsXLQ3qGoAKlAFCeQ</string>
+    <string name="google_storage_bucket" translatable="false">bakery-41c4d.firebasestorage.app</string>
+    <string name="project_id" translatable="false">bakery-41c4d</string>
+    <style name="Theme.Bakery" parent="Theme.AppCompat.Light.NoActionBar"/>
+</resources>

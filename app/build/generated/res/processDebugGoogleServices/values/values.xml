@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_database_url" translatable="false">https://bakery-41c4d-default-rtdb.europe-west1.firebasedatabase.app</string>
+    <string name="gcm_defaultSenderId" translatable="false">194759358957</string>
+    <string name="google_api_key" translatable="false">AIzaSyDDEm2r76e4XKapvvcsXLQ3qGoAKlAFCeQ</string>
+    <string name="google_app_id" translatable="false">1:194759358957:android:0cab5264af9dad31884fe4</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDDEm2r76e4XKapvvcsXLQ3qGoAKlAFCeQ</string>
+    <string name="google_storage_bucket" translatable="false">bakery-41c4d.firebasestorage.app</string>
+    <string name="project_id" translatable="false">bakery-41c4d</string>
+</resources>
